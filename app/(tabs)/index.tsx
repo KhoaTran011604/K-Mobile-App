@@ -147,10 +147,7 @@ export default function App() {
     setRefreshing(true);
     setTimeout(() => {
       // Prepend new posts demo
-      const fresh = Array.from({ length: 3 }, (_, i) =>
-        makePost(Date.now() + i)
-      );
-      setPosts((prev) => [...fresh, ...prev]);
+      LoadData();
       setRefreshing(false);
     }, 800);
   }, []);
@@ -203,14 +200,11 @@ export default function App() {
 
   const [hasMore, setHasMore] = useState(true);
   const LoadData = (isLoadMore = false) => {
-    // if (isLoading) return;
-    // setIsLoading(true);
-    // console.log(filterPage);
+    if (isLoading) return;
+    setIsLoading(true);
 
     GetAllPostByUserId(filterPage)
       .then((response) => {
-        console.log("response", response);
-
         if (response.success) {
           const newData = response.data;
 

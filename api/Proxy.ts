@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { BaseResponse, MetaDataStruct } from './BaseResponse';
 
-const Localhost = "http://172.16.1.100:5000/api"
+const Localhost = "https://server-next-socialmedia.onrender.com/api"
 export const Proxy = async <T = any>(
   method: string,
   endpoint: string,
@@ -34,11 +34,9 @@ export const Proxy = async <T = any>(
         response.data = tmpRes?.data?.data;
         break;
       case 'post':
-        console.log("endpoint", endpoint);
-        console.log("process.env.BACKEND_URL || Localhost + endpoint", process.env.BACKEND_URL || Localhost + endpoint);
 
         tmpRes = await axios.post(process.env.BACKEND_URL || Localhost + endpoint, request, config);
-        console.log("tmpRes", tmpRes);
+
 
         response.success = tmpRes.data?.success || false;
         response.data = tmpRes?.data?.data;

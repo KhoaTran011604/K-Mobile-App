@@ -1,11 +1,13 @@
 import { Post } from "@/app/(tabs)";
-import { useMemo } from "react";
-import { Alert, Pressable, Text, View } from "react-native";
+import { useMemo, useRef, useState } from "react";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import Avatar from "./Avatar";
 import { Feather } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { ItemPostProps } from "@/types/MainType";
 import { formatMessageTime } from "@/libs/format-message-time";
+import { Video, ResizeMode } from "expo-av";
+import BoxImages from "./BoxImages";
 
 const PostCard = ({
   post,
@@ -14,6 +16,8 @@ const PostCard = ({
   onToggleLike: (id: string) => void;
 }) => {
   const grid = useMemo(() => buildGrid(post.images ?? []), [post.images]);
+  const video = useRef<Video>(null);
+  const [status, setStatus] = useState({});
   function buildGrid(imgs: string[]): string[][] {
     // Return up to 2 rows, first row 1-2 images, second row remaining
     if (!imgs.length) return [];
@@ -105,6 +109,23 @@ const PostCard = ({
           )}
         </View>
       )} */}
+      {/* <View className="flex-row flex-wrap justify-between">
+        {post.images.map((img, index) => (
+          <View
+            key={index}
+            style={{ width: "48%", aspectRatio: 1 }}
+            className=" rounded-xl mb-3"
+          >
+            <Image
+              source={{ uri: img.imageAbsolutePath }}
+              style={{ width: "100%", height: "100%", borderRadius: 12 }}
+              contentFit="cover"
+              transition={300}
+            />
+          </View>
+        ))}
+      </View> */}
+      <BoxImages images={post.images} />
 
       {/* Stats */}
       <View className="mt-3 flex-row items-center justify-between">
@@ -143,5 +164,19 @@ const PostCard = ({
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#000",
+  },
+  video: {
+    alignSelf: "center",
+    width: 320,
+    height: 200,
+  },
+  buttons: {
+    marginTop: 20,
+  },
+});
 export default PostCard;

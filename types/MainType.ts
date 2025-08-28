@@ -51,3 +51,8 @@ export type Filter = {
     sortOrder?: string;
     userId?: string;
 };
+
+export interface LoginProps {
+    email: string;
+    password: string;
+}

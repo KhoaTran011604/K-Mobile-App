@@ -17,7 +17,7 @@ export function CustomTabBar({
         if (options.tabBarIcon) {
           iconElement = options.tabBarIcon({
             focused: true,
-            color: isFocused ? "red" : "gray", // màu active vs màu inactive
+            color: isFocused ? "#33A1E0" : "gray", // màu active vs màu inactive
             size: 16,
           });
         }
